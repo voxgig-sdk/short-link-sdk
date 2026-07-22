@@ -1,0 +1,28 @@
+# API Information
+
+
+main: {
+  kit: {
+    info: {
+      auth: false
+      contact: {
+        url: "https://github.com/marwan-pr/short_link"
+      }
+      description: "This API provides a simple interface for shortening URLs using GET requests. Users can quickly generate short links for their long URLs and receive a JSON response containing the shortened link."
+      license: {
+        name: "Free to use"
+      }
+      servers: [
+        {
+          description: "Production server"
+          url: "https://li.page.gd"
+        }
+      ]
+      summary: "This API provides a simple interface for shortening URLs using GET requests."
+      title: "Short Link API"
+      version: "1.0.0"
+      website: "https://github.com/marwan-pr/short_link"
+    }
+  }
+}
+

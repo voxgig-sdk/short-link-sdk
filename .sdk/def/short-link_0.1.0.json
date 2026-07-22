@@ -1,0 +1,131 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Short Link API",
+    "description": "This API provides a simple interface for shortening URLs using GET requests. Users can quickly generate short links for their long URLs and receive a JSON response containing the shortened link.",
+    "version": "1.0.0",
+    "contact": {
+      "url": "https://github.com/marwan-pr/short_link"
+    },
+    "license": {
+      "name": "Free to use"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://li.page.gd",
+      "description": "Production server"
+    }
+  ],
+  "paths": {
+    "/api/set/index.php": {
+      "get": {
+        "summary": "Shorten URL",
+        "description": "Shortens a long URL and returns a shortened link. The URL must start with http:// or https://. All responses are in JSON format.",
+        "operationId": "shortenUrl",
+        "parameters": [
+          {
+            "name": "url",
+            "in": "query",
+            "description": "The long URL to be shortened. Must start with http:// or https://",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uri",
+              "example": "https://google.com"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation - URL shortened successfully or error response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/SuccessResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ErrorResponse"
+                    }
+                  ]
+                },
+                "examples": {
+                  "success": {
+                    "summary": "Successful URL shortening",
+                    "value": {
+                      "code": "https://li.page.gd/abc123"
+                    }
+                  },
+                  "error": {
+                    "summary": "Invalid URL error",
+                    "value": {
+                      "M": "الرابط غير صحيح",
+                      "C": "R"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "URL Shortening"
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "SuccessResponse": {
+        "type": "object",
+        "description": "Response when URL is successfully shortened",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "The final shortened URL",
+            "example": "https://li.page.gd/abc123"
+          }
+        },
+        "required": [
+          "code"
+        ]
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "description": "Error response when URL shortening fails",
+        "properties": {
+          "M": {
+            "type": "string",
+            "description": "Error message from the server",
+            "example": "الرابط غير صحيح"
+          },
+          "C": {
+            "type": "string",
+            "description": "Status type code. 'G' for informational message, 'R' for error",
+            "enum": [
+              "G",
+              "R"
+            ],
+            "example": "R"
+          }
+        },
+        "required": [
+          "M",
+          "C"
+        ]
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "URL Shortening",
+      "description": "Operations for shortening URLs"
+    }
+  ],
+  "externalDocs": {
+    "description": "GitHub Repository and Documentation",
+    "url": "https://github.com/marwan-pr/short_link"
+  }
+}

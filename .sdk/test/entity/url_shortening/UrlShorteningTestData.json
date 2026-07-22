@@ -1,0 +1,25 @@
+{
+  "existing": {
+    "url_shortening": {
+      "URL_SHORTENING00": {
+        "code": "sa",
+        "id": "URL_SHORTENING00"
+      },
+      "URL_SHORTENING01": {
+        "code": "s14",
+        "id": "URL_SHORTENING01"
+      },
+      "URL_SHORTENING02": {
+        "code": "s1e",
+        "id": "URL_SHORTENING02"
+      }
+    }
+  },
+  "new": {
+    "url_shortening": {
+      "url_shortening_ref01": {
+        "code": "s28"
+      }
+    }
+  }
+}
