@@ -66,11 +66,11 @@ function url_shortening_direct_setup(mockres)
   local calls = {}
 
   local env = runner.env_override({
-    ["SHORTLINK_TEST_URL_SHORTENING_ENTID"] = {},
-    ["SHORTLINK_TEST_LIVE"] = "FALSE",
+    ["SHORT_LINK_TEST_URL_SHORTENING_ENTID"] = {},
+    ["SHORT_LINK_TEST_LIVE"] = "FALSE",
   })
 
-  local live = env["SHORTLINK_TEST_LIVE"] == "TRUE"
+  local live = env["SHORT_LINK_TEST_LIVE"] == "TRUE"
 
   if live then
     local merged_opts = {

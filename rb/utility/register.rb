@@ -24,6 +24,7 @@ require_relative 'prepare_method'
 require_relative 'prepare_params'
 require_relative 'prepare_path'
 require_relative 'prepare_query'
+require_relative 'graphql'
 require_relative 'result_basic'
 require_relative 'result_body'
 require_relative 'result_headers'
@@ -55,6 +56,8 @@ ShortLinkUtility.registrar = ->(u) {
   u.prepare_params = ShortLinkUtilities::PrepareParams
   u.prepare_path = ShortLinkUtilities::PreparePath
   u.prepare_query = ShortLinkUtilities::PrepareQuery
+  u.graphql_body = ShortLinkUtilities::GraphqlBody
+  u.graphql_errors = ShortLinkUtilities::GraphqlErrors
   u.result_basic = ShortLinkUtilities::ResultBasic
   u.result_body = ShortLinkUtilities::ResultBody
   u.result_headers = ShortLinkUtilities::ResultHeaders

@@ -26,8 +26,8 @@ import {
 describe('UrlShorteningEntity', async () => {
 
   // Per-test live pacing. Delay is read from sdk-test-control.json's
-  // `test.live.delayMs`; only sleeps when SHORTLINK_TEST_LIVE=TRUE.
-  afterEach(liveDelay('SHORTLINK_TEST_LIVE'))
+  // `test.live.delayMs`; only sleeps when SHORT_LINK_TEST_LIVE=TRUE.
+  afterEach(liveDelay('SHORT_LINK_TEST_LIVE'))
 
   test('instance', async () => {
     const testsdk = ShortLinkSDK.test()
@@ -62,7 +62,7 @@ describe('UrlShorteningEntity', async () => {
     // LOAD
     const url_shortening_ref01_ent = client.UrlShortening()
     const url_shortening_ref01_match_dt0: any = {}
-    const url_shortening_ref01_data_dt0 = await url_shortening_ref01_ent.load(url_shortening_ref01_match_dt0)
+    const url_shortening_ref01_data_dt0 = (await url_shortening_ref01_ent.load(url_shortening_ref01_match_dt0)).data()
     assert(null != url_shortening_ref01_data_dt0)
 
 

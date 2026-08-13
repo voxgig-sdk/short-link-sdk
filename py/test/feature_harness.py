@@ -14,12 +14,12 @@ from __future__ import annotations
 
 from urllib.parse import quote
 
-from config import make_config
-from features import _make_feature
-from core.control import ShortLinkControl
-from core.error import ShortLinkError
-from core.result import ShortLinkResult
-from core.spec import ShortLinkSpec
+from shortlink_sdk.config import make_config
+from shortlink_sdk.features import _make_feature
+from shortlink_sdk.core.control import ShortLinkControl
+from shortlink_sdk.core.error import ShortLinkError
+from shortlink_sdk.core.result import ShortLinkResult
+from shortlink_sdk.core.spec import ShortLinkSpec
 
 
 # True when this SDK was generated with the named feature.

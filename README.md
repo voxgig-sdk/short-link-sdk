@@ -38,9 +38,18 @@ network, and no credentials:
 ### TypeScript
 
 ```ts
-const client = ShortLinkSDK.test()
+// The offline mock starts EMPTY — seed it with the records the test needs.
+// Shape: { entity: { <entity-name>: { <id>: <record> } } }
+const client = ShortLinkSDK.test({
+  entity: {
+    url_shortening: {
+      test01: { id: 'test01' },
+    },
+  },
+})
 const urlshortening = await client.UrlShortening().load()
-// urlshortening is a bare UrlShortening populated with mock data
+// urlshortening is the UrlShortening entity, populated with mock data
+// — call urlshortening.data() for the record itself
 console.log(urlshortening)
 ```
 
@@ -182,7 +191,7 @@ require_once 'shortlink_sdk.php';
 $client = new ShortLinkSDK();
 
 
-// Load a specific urlshortening (returns the bare record; throws on error)
+// Load a specific urlshortening (returns the ENTITY; call data_get() for the record; throws on error)
 $urlshortening = $client->UrlShortening()->load();
 print_r($urlshortening);
 ```
@@ -210,7 +219,7 @@ require_relative "ShortLink_sdk"
 client = ShortLinkSDK.new
 
 
-# Load a specific urlshortening (returns the bare record; raises on error)
+# Load a specific urlshortening (returns the ENTITY; call data_get for the record)
 urlshortening = client.UrlShortening.load()
 puts urlshortening
 ```
@@ -344,6 +353,9 @@ Pass custom features via the `extend` option at construction time.
 
 This SDK is generated from the upstream OpenAPI specification. It is an
 unofficial client and is not affiliated with the API provider.
+
+The OpenAPI spec(s) this SDK was generated from are kept in the
+[`.sdk/def/`](.sdk/def/) folder.
 
 - Upstream API: [https://github.com/marwan-pr/short_link](https://github.com/marwan-pr/short_link)
 

@@ -59,6 +59,7 @@ class ShortLinkConfig
                       ],
                     ],
                   ],
+                  'kind' => 'http',
                   'method' => 'GET',
                   'orig' => '/api/set/index.php',
                   'parts' => [

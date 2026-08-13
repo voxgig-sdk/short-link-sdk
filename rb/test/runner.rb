@@ -23,8 +23,8 @@ module ShortLinkTestRunner
   end
 
   def self.env_override(m)
-    live = getenv("SHORTLINK_TEST_LIVE")
-    override = getenv("SHORTLINK_TEST_OVERRIDE")
+    live = getenv("SHORT_LINK_TEST_LIVE")
+    override = getenv("SHORT_LINK_TEST_OVERRIDE")
 
     if live == "TRUE" || override == "TRUE"
       m.each_key do |key|
@@ -44,8 +44,8 @@ module ShortLinkTestRunner
       end
     end
 
-    explain = getenv("SHORTLINK_TEST_EXPLAIN")
-    m["SHORTLINK_TEST_EXPLAIN"] = explain if explain && !explain.empty?
+    explain = getenv("SHORT_LINK_TEST_EXPLAIN")
+    m["SHORT_LINK_TEST_EXPLAIN"] = explain if explain && !explain.empty?
 
     m
   end

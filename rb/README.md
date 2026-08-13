@@ -34,7 +34,7 @@ client = ShortLinkSDK.new
 
 ```ruby
 begin
-  # load returns the bare UrlShortening record (raises on error).
+  # load returns the ENTITY — call data_get for the UrlShortening record (raises on error).
   urlshortening = client.UrlShortening.load()
   puts urlshortening
 rescue => err
@@ -117,7 +117,8 @@ Create a mock client for unit testing — no server required:
 ```ruby
 client = ShortLinkSDK.test
 
-# Entity ops return the bare mock record (raises on error).
+# Entity ops return the ENTITY (raises on error);
+# call data_get for the mock record.
 urlshortening = client.UrlShortening.load()
 puts urlshortening
 ```
@@ -264,7 +265,7 @@ Create an instance: `url_shortening = client.UrlShortening`
 #### Example: Load
 
 ```ruby
-# load returns the bare UrlShortening record (raises on error).
+# load returns the ENTITY — call data_get for the UrlShortening record (raises on error).
 url_shortening = client.UrlShortening.load()
 ```
 

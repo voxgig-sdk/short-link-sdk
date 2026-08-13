@@ -65,11 +65,11 @@ def url_shortening_direct_setup(mockres)
   calls = []
 
   env = Runner.env_override({
-    "SHORTLINK_TEST_URL_SHORTENING_ENTID" => {},
-    "SHORTLINK_TEST_LIVE" => "FALSE",
+    "SHORT_LINK_TEST_URL_SHORTENING_ENTID" => {},
+    "SHORT_LINK_TEST_LIVE" => "FALSE",
   })
 
-  live = env["SHORTLINK_TEST_LIVE"] == "TRUE"
+  live = env["SHORT_LINK_TEST_LIVE"] == "TRUE"
 
   if live
     merged_opts = {

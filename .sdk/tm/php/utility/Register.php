@@ -23,6 +23,7 @@ require_once __DIR__ . '/MakeUrl.php';
 require_once __DIR__ . '/Param.php';
 require_once __DIR__ . '/PrepareAuth.php';
 require_once __DIR__ . '/PrepareBody.php';
+require_once __DIR__ . '/Graphql.php';
 require_once __DIR__ . '/PrepareHeaders.php';
 require_once __DIR__ . '/PrepareMethod.php';
 require_once __DIR__ . '/PrepareParams.php';
@@ -59,6 +60,8 @@ ShortLinkUtility::setRegistrar(function (ShortLinkUtility $u): void {
     $u->prepare_params = [ShortLinkPrepareParams::class, 'call'];
     $u->prepare_path = [ShortLinkPreparePath::class, 'call'];
     $u->prepare_query = [ShortLinkPrepareQuery::class, 'call'];
+    $u->graphql_body = [ShortLinkGraphql::class, 'body'];
+    $u->graphql_errors = [ShortLinkGraphql::class, 'errors'];
     $u->result_basic = [ShortLinkResultBasic::class, 'call'];
     $u->result_body = [ShortLinkResultBody::class, 'call'];
     $u->result_headers = [ShortLinkResultHeaders::class, 'call'];

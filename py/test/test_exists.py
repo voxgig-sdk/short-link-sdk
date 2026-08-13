@@ -1,4 +1,4 @@
-# ProjectName SDK exists test
+# ShortLink SDK exists test
 
 import pytest
 from shortlink_sdk import ShortLinkSDK

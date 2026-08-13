@@ -43,8 +43,8 @@ class ShortLinkTestRunner
 
     public static function env_override(array $m): array
     {
-        $live = self::getenv('SHORTLINK_TEST_LIVE');
-        $override = self::getenv('SHORTLINK_TEST_OVERRIDE');
+        $live = self::getenv('SHORT_LINK_TEST_LIVE');
+        $override = self::getenv('SHORT_LINK_TEST_OVERRIDE');
 
         if ($live === 'TRUE' || $override === 'TRUE') {
             foreach (array_keys($m) as $key) {
@@ -63,9 +63,9 @@ class ShortLinkTestRunner
             }
         }
 
-        $explain = self::getenv('SHORTLINK_TEST_EXPLAIN');
+        $explain = self::getenv('SHORT_LINK_TEST_EXPLAIN');
         if ($explain !== null && $explain !== '') {
-            $m['SHORTLINK_TEST_EXPLAIN'] = $explain;
+            $m['SHORT_LINK_TEST_EXPLAIN'] = $explain;
         }
 
         return $m;

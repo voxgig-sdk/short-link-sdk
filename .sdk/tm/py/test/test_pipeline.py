@@ -16,11 +16,11 @@
 import pytest
 
 from projectname_sdk import ShortLinkSDK
-from core.error import ShortLinkError
-from core.result import ShortLinkResult
-from core.response import ShortLinkResponse
-from core.spec import ShortLinkSpec
-from feature.base_feature import ShortLinkBaseFeature
+from projectname_sdk.core.error import ShortLinkError
+from projectname_sdk.core.result import ShortLinkResult
+from projectname_sdk.core.response import ShortLinkResponse
+from projectname_sdk.core.spec import ShortLinkSpec
+from projectname_sdk.feature.base_feature import ShortLinkBaseFeature
 
 
 def _client():

@@ -53,6 +53,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/api/set/index.php",
                 ["parts"] = {

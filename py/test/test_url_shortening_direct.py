@@ -3,9 +3,9 @@
 import json
 import pytest
 
-from utility.voxgig_struct import voxgig_struct as vs
+from shortlink_sdk.utility.voxgig_struct import voxgig_struct as vs
 from shortlink_sdk import ShortLinkSDK
-from core import helpers
+from shortlink_sdk.core import helpers
 from test import runner
 
 
@@ -61,11 +61,11 @@ def _url_shortening_direct_setup(mockres):
     calls = []
 
     env = runner.env_override({
-        "SHORTLINK_TEST_URL_SHORTENING_ENTID": {},
-        "SHORTLINK_TEST_LIVE": "FALSE",
+        "SHORT_LINK_TEST_URL_SHORTENING_ENTID": {},
+        "SHORT_LINK_TEST_LIVE": "FALSE",
     })
 
-    live = env.get("SHORTLINK_TEST_LIVE") == "TRUE"
+    live = env.get("SHORT_LINK_TEST_LIVE") == "TRUE"
 
     if live:
         merged_opts = {

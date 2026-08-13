@@ -121,7 +121,8 @@ Create a mock client for unit testing — no server required:
 const client = ShortLinkSDK.test()
 
 const urlshortening = await client.UrlShortening().load()
-// urlshortening is a bare entity populated with mock response data
+// urlshortening is the entity, populated with mock response data
+// — call urlshortening.data() for the record itself
 console.log(urlshortening)
 ```
 
