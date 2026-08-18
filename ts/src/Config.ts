@@ -36,7 +36,7 @@ class Config {
 
 
   options = {
-    base: 'https://li.page.gd',
+    base: "https://li.page.gd",
 
     headers: {
       "content-type": "application/json"
@@ -55,11 +55,8 @@ class Config {
     "url_shortening": {
       "fields": [
         {
-          "active": true,
           "name": "code",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 0
+          "type": "`$STRING`"
         }
       ],
       "name": "url_shortening",
@@ -69,11 +66,9 @@ class Config {
           "name": "load",
           "points": [
             {
-              "active": true,
               "args": {
                 "query": [
                   {
-                    "active": true,
                     "example": "https://google.com",
                     "kind": "query",
                     "name": "url",
@@ -99,11 +94,9 @@ class Config {
               "transform": {
                 "req": "`reqdata`",
                 "res": "`body`"
-              },
-              "index$": 0
+              }
             }
-          ],
-          "key$": "load"
+          ]
         }
       },
       "relations": {

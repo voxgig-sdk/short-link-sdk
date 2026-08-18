@@ -15,7 +15,7 @@ require_relative "../ShortLink_sdk"
 module ShortLinkFeatureHarness
   # True when this SDK was generated with the named feature.
   def self.has_feature?(name)
-    f = ShortLinkConfig.make_config["feature"]
+    f = ShortLinkConfig.shared_config["feature"]
     f.is_a?(Hash) && !f[name].nil?
   end
 

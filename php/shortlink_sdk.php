@@ -40,7 +40,7 @@ class ShortLinkSDK
         $utility = new ShortLinkUtility();
         $this->_utility = $utility;
 
-        $config = ShortLinkConfig::make_config();
+        $config = ShortLinkConfig::shared_config();
 
         $this->_rootctx = ($utility->make_context)([
             "client" => $this,

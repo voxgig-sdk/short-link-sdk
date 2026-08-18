@@ -28,7 +28,7 @@ class ShortLinkSDK
     utility = ShortLinkUtility.new
     @_utility = utility
 
-    config = ShortLinkConfig.make_config
+    config = ShortLinkConfig.shared_config
 
     @_rootctx = utility.make_context.call({
       "client" => self,

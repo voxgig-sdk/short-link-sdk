@@ -14,7 +14,7 @@ from __future__ import annotations
 
 from urllib.parse import quote
 
-from shortlink_sdk.config import make_config
+from shortlink_sdk.config import shared_config
 from shortlink_sdk.features import _make_feature
 from shortlink_sdk.core.control import ShortLinkControl
 from shortlink_sdk.core.error import ShortLinkError
@@ -24,7 +24,7 @@ from shortlink_sdk.core.spec import ShortLinkSpec
 
 # True when this SDK was generated with the named feature.
 def has_feature(name):
-    feature = make_config().get("feature")
+    feature = shared_config().get("feature")
     return isinstance(feature, dict) and feature.get(name) is not None
 
 

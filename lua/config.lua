@@ -1,5 +1,8 @@
 -- ShortLink SDK configuration
 
+-- Build a fresh, fully materialised config table. Every call rebuilds the
+-- whole structure, so prefer require("config_shared") unless you need a
+-- private copy you intend to mutate.
 local function make_config()
   return {
     main = {
@@ -25,11 +28,8 @@ local function make_config()
       ["url_shortening"] = {
         ["fields"] = {
           {
-            ["active"] = true,
             ["name"] = "code",
-            ["req"] = false,
             ["type"] = "`$STRING`",
-            ["index$"] = 0,
           },
         },
         ["name"] = "url_shortening",
@@ -39,11 +39,9 @@ local function make_config()
             ["name"] = "load",
             ["points"] = {
               {
-                ["active"] = true,
                 ["args"] = {
                   ["query"] = {
                     {
-                      ["active"] = true,
                       ["example"] = "https://google.com",
                       ["kind"] = "query",
                       ["name"] = "url",
@@ -70,10 +68,8 @@ local function make_config()
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
                 },
-                ["index$"] = 0,
               },
             },
-            ["key$"] = "load",
           },
         },
         ["relations"] = {
