@@ -33,6 +33,9 @@ class ShortLinkConfig
         return [
             "main" => [
                 "name" => "ShortLink",
+                "slug" => "short-link",
+                "version" => "0.0.1",
+                "target" => "php",
             ],
             "feature" => [
                 "test" => [
