@@ -28,6 +28,7 @@ module ShortLinkConfig
           "options" => {
             "active" => false,
           },
+          "transport" => "base",
         },
       },
       "options" => {
