@@ -14,6 +14,10 @@ Metadata kindly supplied by [www.freepublicapis.com](https://www.freepublicapis.
 
 > TypeScript, Python, PHP, Golang, Ruby, Lua SDKs, a CLI with an interactive REPL, and an MCP server for AI agents — all generated from one OpenAPI spec by [@voxgig/sdkgen](https://github.com/voxgig/sdkgen).
 
+> **Features:** `test` — opt-in,
+> inactive until switched on, and configured per client. See the Features
+> section of any SDK README below for what each one does.
+
 ## Entities, not endpoints
 
 This SDK exposes the API as a small set of **semantic entities** — UrlShortening — that you
@@ -23,7 +27,7 @@ support (`load`):
 
 ```ts
 const client = new ShortLinkSDK()
-const urlshortening = await client.UrlShortening().load()
+const urlshortening = await client.UrlShortening().load({ url: "example" })
 ```
 
 Thinking in entities keeps the mental model small — for people and AI agents alike —
@@ -47,7 +51,7 @@ const client = ShortLinkSDK.test({
     },
   },
 })
-const urlshortening = await client.UrlShortening().load()
+const urlshortening = await client.UrlShortening().load({ url: 'example_url' })
 // urlshortening is the UrlShortening entity, populated with mock data
 // — call urlshortening.data() for the record itself
 console.log(urlshortening)
@@ -57,7 +61,7 @@ console.log(urlshortening)
 
 ```python
 client = ShortLinkSDK.test()
-urlshortening = client.UrlShortening().load()
+urlshortening = client.UrlShortening().load({"url": "example"})
 print(urlshortening)
 ```
 
@@ -68,7 +72,7 @@ print(urlshortening)
 $client = ShortLinkSDK::test([
     "entity" => ["urlshortening" => ["test01" => []]],
 ]);
-$urlshortening = $client->UrlShortening()->load();
+$urlshortening = $client->UrlShortening()->load(["url" => "example"]);
 ```
 
 ### Golang
@@ -87,14 +91,14 @@ result, err := client.UrlShortening(nil).Load(
 client = ShortLinkSDK.test({
   "entity" => { "urlshortening" => { "test01" => {} } },
 })
-urlshortening = client.UrlShortening.load()
+urlshortening = client.UrlShortening.load({ "url" => "example" })
 ```
 
 ### Lua
 
 ```lua
 local client = sdk.test()
-local result, err = client:UrlShortening():load()
+local result, err = client:UrlShortening():load({ url = "example" })
 ```
 
 ## Packages
@@ -178,7 +182,7 @@ client = ShortLinkSDK()
 
 
 # Load a specific urlshortening (returns the record, raises on error)
-urlshortening = client.UrlShortening().load()
+urlshortening = client.UrlShortening().load({"url": "example_url"})
 print(urlshortening)
 ```
 
@@ -192,7 +196,7 @@ $client = new ShortLinkSDK();
 
 
 // Load a specific urlshortening (returns the ENTITY; call data_get() for the record; throws on error)
-$urlshortening = $client->UrlShortening()->load();
+$urlshortening = $client->UrlShortening()->load(["url" => "example_url"]);
 print_r($urlshortening);
 ```
 
@@ -204,7 +208,7 @@ import sdk "github.com/voxgig-sdk/short-link-sdk/go"
 client := sdk.New()
 
 // Load urlshortening data
-urlShortening, err := client.UrlShortening(nil).Load(nil, nil)
+urlShortening, err := client.UrlShortening(nil).Load(map[string]any{"url": "example_url"}, nil)
 if err != nil {
     panic(err)
 }
@@ -220,7 +224,7 @@ client = ShortLinkSDK.new
 
 
 # Load a specific urlshortening (returns the ENTITY; call data_get for the record)
-urlshortening = client.UrlShortening.load()
+urlshortening = client.UrlShortening.load({ "url" => "example_url" })
 puts urlshortening
 ```
 
@@ -233,7 +237,7 @@ local client = sdk.new()
 
 
 -- Load a specific urlshortening
-local urlshortening, err = client:UrlShortening():load()
+local urlshortening, err = client:UrlShortening():load({ url = "example_url" })
 print(urlshortening)
 ```
 
@@ -339,6 +343,32 @@ forking the SDK.
 | **TestFeature** | In-memory mock transport for testing without a live server |
 
 Pass custom features via the `extend` option at construction time.
+
+## Customizing this SDK
+
+This repository contains its own generator (`.sdk/`), so the SDK is
+customizable without forking any upstream tool:
+
+- **The model** (`.sdk/model/`) declares everything this project owns:
+  package names, versions, active features, per-target settings. It is
+  written in [aontu](https://github.com/aontu-lang/aontu), a JSON-based
+  specification language designed for building ontologies: easy to edit
+  by hand, and files unify rather than override, so small declarations
+  compose into one model. Regeneration re-reads it every time.
+- **Templates** (`.sdk/tm/`) and **components** (`.sdk/src/cmp/`) are
+  the two layers of generation, copied into this repo: templates are the
+  literal per-language source, components generate the API-shaped parts.
+- **Regeneration merges.** By default, newly generated content is
+  three-way merged into existing files, so generator updates and local
+  edits usually converge without manual conflict handling. A project can
+  opt for plain overwrite instead.
+- **Custom features and entire custom targets** arrive through sdkgen
+  packages (`voxgig-sdkgen package add`), on the same rails as the
+  bundled languages, and `voxgig-sdkgen doctor` reports any drift from
+  what a resync would write.
+
+How-to: [customize and propagate templates](https://github.com/voxgig/sdkgen/blob/main/docs/how-to/customize-and-propagate-templates.md).
+The full story: [voxgig.com/sdk/custom](https://voxgig.com/sdk/custom).
 
 ## Per-language documentation
 

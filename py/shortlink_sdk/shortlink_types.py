@@ -20,5 +20,5 @@ class UrlShortening(TypedDict, total=False):
     code: str
 
 
-class UrlShorteningLoadMatch(TypedDict, total=False):
-    code: str
+class UrlShorteningLoadMatch(TypedDict):
+    url: str

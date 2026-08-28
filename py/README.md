@@ -42,7 +42,7 @@ client = ShortLinkSDK()
 
 ```python
 try:
-    urlshortening = client.UrlShortening().load()
+    urlshortening = client.UrlShortening().load({"url": "example_url"})
     print(urlshortening)
 except Exception as err:
     print(f"load failed: {err}")
@@ -55,7 +55,7 @@ Entity operations raise on failure, so wrap them in `try` / `except`:
 
 ```python
 try:
-    urlshortening = client.UrlShortening().load()
+    urlshortening = client.UrlShortening().load({"url": "example"})
     print(urlshortening)
 except Exception as err:
     print(f"load failed: {err}")
@@ -124,7 +124,7 @@ client = ShortLinkSDK.test()
 
 # Entity ops return the ENTITY and raises on error;
 # call data_get() for the record.
-urlshortening = client.UrlShortening().load()
+urlshortening = client.UrlShortening().load({"url": "example"})
 # urlshortening contains the mock response record
 ```
 
@@ -271,8 +271,31 @@ Create an instance: `url_shortening = client.UrlShortening()`
 #### Example: Load
 
 ```python
-url_shortening = client.UrlShortening().load()
+url_shortening = client.UrlShortening().load({"url": "url"})
 ```
+
+## Features
+
+This SDK ships 1 optional features. Each is **inactive until you
+switch it on**, so an SDK you have not configured behaves exactly as if none of
+them existed — no retries, no cache, no logging, no measurable overhead.
+
+Activate a feature by name in the client options, alongside the options shown
+above:
+
+| Feature | What it does |
+|---|---|
+| [`test`](#test) | In-memory mock transport for testing without a live server |
+
+### test
+
+In-memory mock transport for testing without a live server.
+
+| Option | Default |
+|---|---|
+| `active` | `false` |
+
+Set `feature.test.active` to enable it, then override any of the options above.
 
 
 ## Advanced
@@ -351,7 +374,7 @@ stores the returned data and match criteria internally.
 
 ```python
 urlshortening = client.UrlShortening()
-urlshortening.load()
+urlshortening.load({"url": "example"})
 
 # urlshortening.data_get() now returns the urlshortening data from the last load
 # urlshortening.match_get() returns the last match criteria

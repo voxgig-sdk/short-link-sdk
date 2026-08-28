@@ -19,10 +19,10 @@ UrlShortening = Struct.new(
 
 # Request payload for UrlShortening#load.
 #
-# @!attribute [rw] code
-#   @return [String, nil]
+# @!attribute [rw] url
+#   @return [String]
 UrlShorteningLoadMatch = Struct.new(
-  :code,
+  :url,
   keyword_init: true
 )
 

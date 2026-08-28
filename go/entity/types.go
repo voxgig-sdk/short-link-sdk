@@ -19,7 +19,7 @@ type UrlShortening struct {
 
 // UrlShorteningLoadMatch is the typed request payload for UrlShortening.LoadTyped.
 type UrlShorteningLoadMatch struct {
-	Code *string `json:"code,omitempty"`
+	Url string `json:"url"`
 }
 
 // asMap turns a typed request/data struct into the map[string]any the

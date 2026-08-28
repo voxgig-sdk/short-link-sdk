@@ -10,6 +10,6 @@ export interface UrlShortening {
 }
 
 export interface UrlShorteningLoadMatch {
-  code?: string
+  url: string
 }
 

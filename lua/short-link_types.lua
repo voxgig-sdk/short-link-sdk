@@ -10,7 +10,7 @@
 ---@field code? string
 
 ---@class UrlShorteningLoadMatch
----@field code? string
+---@field url string
 
 local M = {}
 

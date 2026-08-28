@@ -21,6 +21,6 @@ class UrlShortening
 /** Request payload for UrlShortening#load. */
 class UrlShorteningLoadMatch
 {
-    public ?string $code = null;
+    public string $url;
 }
 
