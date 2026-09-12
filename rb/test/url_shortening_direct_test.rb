@@ -72,8 +72,10 @@ def url_shortening_direct_setup(mockres)
   live = env["SHORT_LINK_TEST_LIVE"] == "TRUE"
 
   if live
-    merged_opts = {
-    }
+    # Merged so the generated fields win: sdk-test-control.json's
+    # test.client.options adds to the live client, it does not redirect it.
+    merged_opts = Runner.live_client_options.merge({
+    })
     client = ShortLinkSDK.new(merged_opts)
     return {
       client: client,
