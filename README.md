@@ -105,7 +105,7 @@ local result, err = client:UrlShortening():load({ url = "example" })
 
 | Language | Package | Install |
 | --- | --- | --- |
-| TypeScript | `@voxgig-sdk/short-link` | publish pending — [install from git tag](https://github.com/voxgig-sdk/short-link-sdk/releases) |
+| TypeScript | `@voxgig-sdk/short-link-sdk` | publish pending — [install from git tag](https://github.com/voxgig-sdk/short-link-sdk/releases) |
 | Python | `voxgig-sdk-short-link` | publish pending — [install from git tag](https://github.com/voxgig-sdk/short-link-sdk/releases) |
 | PHP | `voxgig-sdk/short-link` | publish pending — [install from git tag](https://github.com/voxgig-sdk/short-link-sdk/releases) |
 | Golang | `github.com/voxgig-sdk/short-link-sdk/go` | `go get github.com/voxgig-sdk/short-link-sdk/go@latest` |
@@ -119,7 +119,7 @@ local result, err = client:UrlShortening():load({ url = "example" })
 ### TypeScript
 
 ```ts
-import { ShortLinkSDK } from '@voxgig-sdk/short-link'
+import { ShortLinkSDK } from '@voxgig-sdk/short-link-sdk'
 
 const client = new ShortLinkSDK()
 
