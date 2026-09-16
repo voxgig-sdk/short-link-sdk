@@ -40,6 +40,8 @@ const node_path_1 = __importDefault(require("node:path"));
 const Fs = __importStar(require("node:fs"));
 const node_test_1 = require("node:test");
 const node_assert_1 = __importDefault(require("node:assert"));
+const live_runner_1 = require("../../live-runner");
+const live_entity_1 = require("../../live-entity");
 const __1 = require("../../..");
 const utility_1 = require("../../utility");
 // AFTER the imports on purpose: TypeScript hoists `import` above any
@@ -59,16 +61,12 @@ const utility_1 = require("../../utility");
     (0, node_test_1.test)('basic', async (t) => {
         const live = 'TRUE' === process.env.SHORT_LINK_TEST_LIVE;
         for (const op of ['load']) {
-            if ((0, utility_1.maybeSkipControl)(t, 'entityOp', 'url_shortening.' + op, live))
+            if (!live && (0, utility_1.maybeSkipControl)(t, 'entityOp', 'url_shortening.' + op, live))
                 return;
         }
         const setup = basicSetup();
-        // The basic flow consumes synthetic IDs and field values from the
-        // fixture (entity TestData.json). Those don't exist on the live API.
-        // Skip live runs unless the user provided a real ENTID env override.
-        if (setup.syntheticOnly) {
-            t.skip('live entity test uses synthetic IDs from fixture — set SHORT_LINK_TEST_URL_SHORTENING_ENTID JSON to run live');
-            return;
+        if (setup.live) {
+            return (0, live_entity_1.runLiveEntity)(setup, { "active": true, "alias": { "field": {} }, "fields": [{ "active": true, "name": "code", "req": false, "type": "`$STRING`", "index$": 0 }], "name": "url_shortening", "op": { "load": { "input": "data", "name": "load", "points": [{ "active": true, "args": { "query": [{ "active": true, "example": "https://google.com", "kind": "query", "name": "url", "orig": "url", "reqd": true, "type": "`$STRING`", "index$": 0 }] }, "contract": { "id": "GET /api/set/index.php", "json": "{\"operationId\":\"shortenUrl\",\"parameters\":[{\"description\":\"The long URL to be shortened. Must start with http:// or https://\",\"in\":\"query\",\"name\":\"url\",\"required\":true,\"schema\":{\"example\":\"https://google.com\",\"format\":\"uri\",\"type\":\"string\"}}],\"protocol\":\"http\",\"responses\":{\"200\":{\"content\":{\"application/json\":{\"examples\":{\"error\":{\"summary\":\"Invalid URL error\",\"value\":{\"C\":\"R\",\"M\":\"الرابط غير صحيح\"}},\"success\":{\"summary\":\"Successful URL shortening\",\"value\":{\"code\":\"https://li.page.gd/abc123\"}}},\"schema\":{\"oneOf\":[{\"description\":\"Response when URL is successfully shortened\",\"properties\":{\"code\":{\"description\":\"The final shortened URL\",\"example\":\"https://li.page.gd/abc123\",\"type\":\"string\"}},\"required\":[\"code\"],\"type\":\"object\"},{\"description\":\"Error response when URL shortening fails\",\"properties\":{\"C\":{\"description\":\"Status type code. 'G' for informational message, 'R' for error\",\"enum\":[\"G\",\"R\"],\"example\":\"R\",\"type\":\"string\"},\"M\":{\"description\":\"Error message from the server\",\"example\":\"الرابط غير صحيح\",\"type\":\"string\"}},\"required\":[\"M\",\"C\"],\"type\":\"object\"}]}}},\"description\":\"Successful operation - URL shortened successfully or error response\"}},\"securitySource\":\"unspecified\"}", "source": "openapi3", "version": 1 }, "kind": "http", "method": "GET", "orig": "/api/set/index.php", "segments": [{ "lit": "api" }, { "lit": "set" }, { "lit": "index.php" }], "select": { "exist": ["url"] }, "transform": { "req": "`reqdata`", "res": "`body`" }, "index$": 0 }], "key$": "load" } }, "relations": { "ancestors": [] }, "key$": "url_shortening", "name__orig": "url_shortening", "Name": "UrlShortening", "name_": "url_shortening", "name-": "url-shortening", "NAME": "URL_SHORTENING", "index$": 0 }, { "active": true, "entity": "url_shortening", "key$": "BasicUrlShorteningFlow", "kind": "basic", "name": "BasicUrlShorteningFlow", "param": {}, "step": [{ "active": true, "data": {}, "input": { "ref": "url_shortening_ref01", "srcdatavar": "url_shortening_ref01_data", "suffix": "_dt0" }, "match": {}, "op": "load", "spec": [], "valid": [{ "apply": "TextFieldMark", "def": { "mark": "Mark01-url_shortening_ref01" } }], "index$": 0 }] }, 'UrlShortening');
         }
         const client = setup.client;
         const struct = setup.struct;
@@ -102,12 +100,6 @@ function basicSetup(extra) {
                 '`$VAL`': ['`$FORMAT`', 'upper', '`$COPY`']
             }]
     });
-    // Detect whether the user provided a real ENTID JSON via env var. The
-    // basic flow consumes synthetic IDs from the fixture file; without an
-    // override those synthetic IDs reach the live API and 4xx. Surface this
-    // to the test so it can skip rather than fail.
-    const idmapEnvVal = process.env['SHORT_LINK_TEST_URL_SHORTENING_ENTID'];
-    const idmapOverridden = null != idmapEnvVal && idmapEnvVal.trim().startsWith('{');
     const env = (0, utility_1.envOverride)({
         'SHORT_LINK_TEST_URL_SHORTENING_ENTID': idmap,
         'SHORT_LINK_TEST_LIVE': 'FALSE',
@@ -115,7 +107,13 @@ function basicSetup(extra) {
     });
     idmap = env['SHORT_LINK_TEST_URL_SHORTENING_ENTID'];
     const live = 'TRUE' === env.SHORT_LINK_TEST_LIVE;
+    const transport = (0, live_runner_1.createLiveTransport)();
     if (live) {
+        const rawIds = process.env['SHORT_LINK_TEST_URL_SHORTENING_ENTID'];
+        idmap = rawIds && rawIds.trim() ? JSON.parse(rawIds) : {};
+        if (!idmap || Array.isArray(idmap) || typeof idmap !== 'object') {
+            throw new Error('Live ENTID must be a JSON object');
+        }
         client = new __1.ShortLinkSDK(merge([
             // FIRST, so the generated fields below win: sdk-test-control.json's
             // test.client.options adds to the live client, it does not redirect it.
@@ -126,7 +124,8 @@ function basicSetup(extra) {
             // argument at all - so a bare 'extra' silently discarded the apikey
             // and server values above and handed the SDK undefined. Harmless
             // while there was nothing in that object; not harmless now.
-            extra || {}
+            extra || {},
+            { system: { fetch: transport.fetch } }
         ]));
     }
     const setup = {
@@ -138,7 +137,7 @@ function basicSetup(extra) {
         data: entityData,
         explain: 'TRUE' === env.SHORT_LINK_TEST_EXPLAIN,
         live,
-        syntheticOnly: live && !idmapOverridden,
+        transport,
         now: Date.now(),
     };
     return setup;

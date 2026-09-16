@@ -30,6 +30,12 @@ main: kit: entity: url_shortening: {
               }
             ]
           }
+          contract: {
+            id: "GET /api/set/index.php"
+            json: "{\"operationId\":\"shortenUrl\",\"parameters\":[{\"description\":\"The long URL to be shortened. Must start with http:// or https://\",\"in\":\"query\",\"name\":\"url\",\"required\":true,\"schema\":{\"example\":\"https://google.com\",\"format\":\"uri\",\"type\":\"string\"}}],\"protocol\":\"http\",\"responses\":{\"200\":{\"content\":{\"application/json\":{\"examples\":{\"error\":{\"summary\":\"Invalid URL error\",\"value\":{\"C\":\"R\",\"M\":\"الرابط غير صحيح\"}},\"success\":{\"summary\":\"Successful URL shortening\",\"value\":{\"code\":\"https://li.page.gd/abc123\"}}},\"schema\":{\"oneOf\":[{\"description\":\"Response when URL is successfully shortened\",\"properties\":{\"code\":{\"description\":\"The final shortened URL\",\"example\":\"https://li.page.gd/abc123\",\"type\":\"string\"}},\"required\":[\"code\"],\"type\":\"object\"},{\"description\":\"Error response when URL shortening fails\",\"properties\":{\"C\":{\"description\":\"Status type code. 'G' for informational message, 'R' for error\",\"enum\":[\"G\",\"R\"],\"example\":\"R\",\"type\":\"string\"},\"M\":{\"description\":\"Error message from the server\",\"example\":\"الرابط غير صحيح\",\"type\":\"string\"}},\"required\":[\"M\",\"C\"],\"type\":\"object\"}]}}},\"description\":\"Successful operation - URL shortened successfully or error response\"}},\"securitySource\":\"unspecified\"}"
+            source: "openapi3"
+            version: 1
+          }
           method: "GET"
           orig: "/api/set/index.php"
           segments: [
