@@ -116,6 +116,7 @@ def make_config():
         "fields": [
           {
             "name": "code",
+            "title": "Code",
             "type": "`$STRING`",
           },
         ],
@@ -126,18 +127,6 @@ def make_config():
             "name": "load",
             "points": [
               {
-                "args": {
-                  "query": [
-                    {
-                      "example": "https://google.com",
-                      "kind": "query",
-                      "name": "url",
-                      "orig": "url",
-                      "reqd": True,
-                      "type": "`$STRING`",
-                    },
-                  ],
-                },
                 "kind": "http",
                 "method": "GET",
                 "orig": "/api/set/index.php",
@@ -152,20 +141,33 @@ def make_config():
                     "lit": "index.php",
                   },
                 ],
-                "select": {
-                  "exist": [
-                    "url",
-                  ],
-                },
-                "transform": {
-                  "req": "`reqdata`",
-                  "res": "`body`",
-                },
                 "parts": [
                   "api",
                   "set",
                   "index.php",
                 ],
+                "rename": {},
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body`",
+                },
+                "args": {
+                  "query": [
+                    {
+                      "name": "url",
+                      "orig": "url",
+                      "type": "`$STRING`",
+                      "kind": "query",
+                      "reqd": True,
+                      "example": "https://google.com",
+                    },
+                  ],
+                },
+                "select": {
+                  "exist": [
+                    "url",
+                  ],
+                },
               },
             ],
           },

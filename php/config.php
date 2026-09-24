@@ -113,6 +113,7 @@ class ShortLinkConfig
           'fields' => [
             [
               'name' => 'code',
+              'title' => 'Code',
               'type' => '`$STRING`',
             ],
           ],
@@ -123,18 +124,6 @@ class ShortLinkConfig
               'name' => 'load',
               'points' => [
                 [
-                  'args' => [
-                    'query' => [
-                      [
-                        'example' => 'https://google.com',
-                        'kind' => 'query',
-                        'name' => 'url',
-                        'orig' => 'url',
-                        'reqd' => true,
-                        'type' => '`$STRING`',
-                      ],
-                    ],
-                  ],
                   'kind' => 'http',
                   'method' => 'GET',
                   'orig' => '/api/set/index.php',
@@ -149,19 +138,32 @@ class ShortLinkConfig
                       'lit' => 'index.php',
                     ],
                   ],
-                  'select' => [
-                    'exist' => [
-                      'url',
-                    ],
-                  ],
-                  'transform' => [
-                    'req' => '`reqdata`',
-                    'res' => '`body`',
-                  ],
                   'parts' => [
                     'api',
                     'set',
                     'index.php',
+                  ],
+                  'rename' => [],
+                  'transform' => [
+                    'req' => '`reqdata`',
+                    'res' => '`body`',
+                  ],
+                  'args' => [
+                    'query' => [
+                      [
+                        'name' => 'url',
+                        'orig' => 'url',
+                        'type' => '`$STRING`',
+                        'kind' => 'query',
+                        'reqd' => true,
+                        'example' => 'https://google.com',
+                      ],
+                    ],
+                  ],
+                  'select' => [
+                    'exist' => [
+                      'url',
+                    ],
                   ],
                 ],
               ],

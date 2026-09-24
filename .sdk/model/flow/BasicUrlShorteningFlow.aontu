@@ -1,0 +1,28 @@
+# BasicUrlShorteningFlow
+
+main: kit: flow: BasicUrlShorteningFlow:
+{
+  entity: "url_shortening",
+  kind: "basic",
+  name: "BasicUrlShorteningFlow",
+  step: [
+    {
+      i: {
+        ref: "url_shortening_ref01",
+        srcdatavar: "url_shortening_ref01_data",
+        suffix: "_dt0"
+      }
+
+      o: "load",
+      v: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-url_shortening_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicUrlShorteningFlow"
+}
