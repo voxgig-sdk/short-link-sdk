@@ -1,7 +1,13 @@
 -- ShortLink SDK error
 
+local json = require("dkjson")
+
 local ShortLinkError = {}
 ShortLinkError.__index = ShortLinkError
+
+-- Reachable for a debugger, absent from the table itself: the context holds
+-- the live spec and options, and an error is what gets dumped or encoded.
+local CONTEXT = setmetatable({}, { __mode = "k" })
 
 
 function ShortLinkError.new(code, msg, ctx)
@@ -10,10 +16,15 @@ function ShortLinkError.new(code, msg, ctx)
   self.sdk = "ShortLink"
   self.code = code or ""
   self.msg = msg or ""
-  self.ctx = ctx
   self.result = nil
   self.spec = nil
+  CONTEXT[self] = ctx
   return self
+end
+
+
+function ShortLinkError:context()
+  return CONTEXT[self]
 end
 
 
@@ -22,8 +33,32 @@ function ShortLinkError:error()
 end
 
 
+-- What make_error attached is already cleaned; the context is not part of
+-- the record.
+function ShortLinkError:to_table()
+  return {
+    sdk = self.sdk,
+    code = self.code,
+    msg = self.msg,
+    status = self.status,
+    result = self.result,
+    spec = self.spec,
+  }
+end
+
+
+function ShortLinkError:to_json()
+  return json.encode(self:to_table())
+end
+
+
 function ShortLinkError:__tostring()
   return self.msg
+end
+
+
+function ShortLinkError.__tojson(self)
+  return self:to_json()
 end
 
 

@@ -33,6 +33,8 @@ require_relative 'transform_response'
 
 ShortLinkUtility.registrar = ->(u) {
   u.clean = ShortLinkUtilities::Clean
+  u.clean_add = ShortLinkUtilities::CleanAdd
+  u.clean_explain = ShortLinkUtilities::CleanExplain
   u.done = ShortLinkUtilities::Done
   u.make_error = ShortLinkUtilities::MakeError
   u.feature_add = ShortLinkUtilities::FeatureAdd

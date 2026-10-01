@@ -37,6 +37,8 @@ require_once __DIR__ . '/TransformResponse.php';
 
 ShortLinkUtility::setRegistrar(function (ShortLinkUtility $u): void {
     $u->clean = [ShortLinkClean::class, 'call'];
+    $u->clean_add = [ShortLinkClean::class, 'add'];
+    $u->clean_explain = [ShortLinkDone::class, 'clean_explain'];
     $u->done = [ShortLinkDone::class, 'call'];
     $u->make_error = [ShortLinkMakeError::class, 'call'];
     $u->feature_add = [ShortLinkFeatureAdd::class, 'call'];
