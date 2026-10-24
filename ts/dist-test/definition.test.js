@@ -19,8 +19,18 @@ const PLAN = [
             "url": "https://google.com"
         },
         "headers": [],
+        "cookies": [],
+        "responseMedia": [
+            "application/json"
+        ],
         "query": [
             "url"
+        ],
+        "queryArgs": [
+            {
+                "name": "url",
+                "wire": "url"
+            }
         ],
         "auth": null,
         "status": 200,
